@@ -11,13 +11,14 @@ fs.writeFile(path.join(__dirname, 'files', 'reply.txt'), 'Nice to meet you.', (e
     if (error)
         throw error
     console.log('write complete')
+
+    fs.appendFile(path.join(__dirname, 'files', 'reply.txt'), '\n\nYes, it is.', (error) => {
+        if (error)
+            throw error
+        console.log('append complete')
+    })
 })
 
-fs.appendFile(path.join(__dirname, 'files', 'reply.txt'), '\n\nYes, it is.', (error) => {
-    if (error)
-        throw error
-    console.log('append complete')
-})
 
 process.on('uncaughtException', error => {
     console.log(error)
