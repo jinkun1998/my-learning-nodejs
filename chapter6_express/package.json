@@ -1,0 +1,11 @@
+{
+  "name": "express-tutorial",
+  "description": "express tutorial with nodejs",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
