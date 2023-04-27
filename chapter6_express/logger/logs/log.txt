@@ -1,0 +1,20 @@
+Thu Apr 27 2023 15:11:44 GMT+0700 (Giờ Đông Dương)	da7509ae-e64e-4180-9d14-6b466a28a347	GET	localhost	/goto/about
+Thu Apr 27 2023 15:12:00 GMT+0700 (Giờ Đông Dương)	a3d7973b-7a62-4d98-affa-d5d6d739737a	GET	localhost	/
+Thu Apr 27 2023 15:14:25 GMT+0700 (Giờ Đông Dương)	db8c3f27-5ec3-4d38-ba6e-37909027d8a0	GET	localhost	/
+Thu Apr 27 2023 15:15:14 GMT+0700 (Giờ Đông Dương)	d6231771-d3ef-4c6b-91ae-dcc3a1290348	GET	localhost	/
+Thu Apr 27 2023 15:16:23 GMT+0700 (Giờ Đông Dương)	c11679fb-d786-4d71-a501-f97d1dfd2272	GET	localhost	/
+Thu Apr 27 2023 15:16:41 GMT+0700 (Giờ Đông Dương)	6870cb72-0c89-4acb-a941-b700c8494a53	GET	localhost	/
+Thu Apr 27 2023 15:17:20 GMT+0700 (Giờ Đông Dương)	15d1f1e7-adad-4f06-bae7-0720145f4aaf	GET	localhost	/
+Thu Apr 27 2023 15:18:01 GMT+0700 (Giờ Đông Dương)	7de7d0fc-c62d-4277-bb16-1680bd73895a	GET	localhost	/
+Thu Apr 27 2023 15:18:43 GMT+0700 (Giờ Đông Dương)	c275fc6b-6211-49f6-9f8f-052af320f920	GET	localhost	/	[object Object]
+Thu Apr 27 2023 15:18:52 GMT+0700 (Giờ Đông Dương)	ed19ea24-e427-4c0f-ba13-51f2284a87bc	GET	localhost	/	[object Object]
+Thu Apr 27 2023 15:19:25 GMT+0700 (Giờ Đông Dương)	ba67b767-732a-4a30-ae26-1e0f3d2c9d9a	GET	localhost	/	[object Object]
+Thu Apr 27 2023 15:19:48 GMT+0700 (Giờ Đông Dương)	7b811ed0-7d92-49d3-96cc-96b5795bf16e	GET	localhost	/	[object Object]
+Thu Apr 27 2023 15:19:50 GMT+0700 (Giờ Đông Dương)	18f6a506-2335-4b2b-a8a3-84d56cd30602	GET	localhost	/goto	[object Object]
+Thu Apr 27 2023 15:22:45 GMT+0700 (Giờ Đông Dương)	587cff93-9527-4140-98f6-ad4e8d128501	GET	localhost	/	[object Object]
+Thu Apr 27 2023 15:23:02 GMT+0700 (Giờ Đông Dương)	f878f711-be10-4bc2-b734-2d8da2962d5e	GET	localhost	/
+Thu Apr 27 2023 15:23:05 GMT+0700 (Giờ Đông Dương)	4dbd8f2c-f5e6-4dae-bc08-9b19d870827e	GET	localhost	/goto
+Thu Apr 27 2023 15:23:51 GMT+0700 (Giờ Đông Dương)	92250c8d-4a16-491c-87af-724fbca54979	GET	localhost	/goto
+Thu Apr 27 2023 15:24:06 GMT+0700 (Giờ Đông Dương)	91bbfc58-fde4-42c7-8b0e-429093609e9b	GET	localhost	/goto
+Thu Apr 27 2023 15:24:10 GMT+0700 (Giờ Đông Dương)	a588fe24-b83d-41e0-90c1-0d26734ec4d7	GET	localhost	/goto/aa
+Thu Apr 27 2023 15:24:15 GMT+0700 (Giờ Đông Dương)	3e0db638-e0cb-4d6b-ae53-183674ec1d59	GET	localhost	/goto/about
