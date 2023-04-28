@@ -3,7 +3,7 @@ const employeeController = require('./../controllers/employeeController')
 const router = express.Router()
 
 router.route('/')
-    .get(employeeController.getEmployee)
+    .get(employeeController.getEmployees)
     .put(employeeController.updateEmployee)
     .delete(employeeController.delemployee)
     .post(employeeController.addEmployee)
