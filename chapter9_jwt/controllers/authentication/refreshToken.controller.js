@@ -1,4 +1,5 @@
 const userUtils = require('./../../utils/users.utils')
+const { responseOK, responseError } = require('./../../utils/response.utils')
 const jwt = require('jsonwebtoken')
 
 const refreshTokenHandler = async (req, res) => {
@@ -8,24 +9,24 @@ const refreshTokenHandler = async (req, res) => {
     const users = await userUtils.getAll()
     const user = users.find(user => user.refreshToken == token)
     if (!user)
-        return res.status(401).json({ message: 'unauthorized' })
+        return responseError(res, 401, 'unauthorized')
 
-    // generate token
-    const accessToken = jwt.sign(
-        { userid: user.userid },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '5m' }
-    )
-    const refreshToken = jwt.sign(
-        { userid: user.userid },
+    jwt.verify(
+        token,
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '1d' }
+        (err, decoded => {
+            if (err || user.userid !== decoded.userid)
+                return res.status(403).json({ message: 'forbidden' })
+
+            const accessToken = jwt.sign(
+                { userid: user.userid },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '5m' }
+            )
+
+            return responseOK(res, 'refresh success', { accessToken })
+        })
     )
-
-    // update new refreshToken
-    await userUtils.updateOne({ ...user, refreshToken })
-
-    return res.json({ message: 'refresh success', accessToken })
 }
 
 module.exports = { refreshTokenHandler }

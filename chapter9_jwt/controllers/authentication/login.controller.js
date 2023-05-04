@@ -1,4 +1,5 @@
 const userUtils = require('./../../utils/users.utils')
+const { responseOK, responseError } = require('./../../utils/response.utils')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 require('dotenv').config()
@@ -6,16 +7,16 @@ require('dotenv').config()
 const loginHandler = async (req, res) => {
     const { userid, password } = req.body
     if (!userid || !password)
-        return res.status(400).json({ message: 'username & password is required' })
+        return responseError(res, 400, 'username & password is required')
 
     const users = await userUtils.getAll()
     const user = users.find(user => user.userid === userid)
     console.log(user)
     if (!user)
-        return res.status(401).json({ message: 'login failed' })
+        return responseError(res, 400, 'login failed')
 
     if (!await bcrypt.compare(password, user.password))
-        return res.status(401).json({ message: 'login failed' })
+        return responseError(res, 400, 'login failed')
 
 
     // generate token
@@ -34,7 +35,7 @@ const loginHandler = async (req, res) => {
     await userUtils.updateOne({ ...user, refreshToken })
     res.cookie('refreshToken', refreshToken)
 
-    return res.json({ message: 'login success', accessToken })
+    return responseOK(res, 200, 'login success', { accessToken })
 }
 
 module.exports = { loginHandler }
