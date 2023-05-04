@@ -1,12 +1,15 @@
 const express = require('express')
-const bp = require('body-parser')
 const reqLogger = require('./middleware/middleware')
+const cookieParser = require('cookie-parser')
 const app = express()
+const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3500
 
 // apply body-parser
-app.use(bp.json())
-bp.urlencoded({ extended: true })
+app.use(bodyParser.json())
+bodyParser.urlencoded({ extended: true })
+// apply cookie-parser
+app.use(cookieParser())
 // apply middleware
 app.use(reqLogger)
 

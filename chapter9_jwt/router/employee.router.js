@@ -1,14 +1,15 @@
 const express = require('express')
-const employeeController = require('../controllers/employee.controller')
 const router = express.Router()
+const employeeController = require('../controllers/employee.controller')
+const verifyToken = require('../middleware/verifyToken.middleware')
 
 router.route('/')
-    .get(employeeController.getEmployees)
-    .put(employeeController.updateEmployee)
-    .delete(employeeController.delemployee)
-    .post(employeeController.addEmployee)
+    .get(verifyToken, employeeController.getEmployees)
+    .put(verifyToken, employeeController.updateEmployee)
+    .delete(verifyToken, employeeController.delemployee)
+    .post(verifyToken, employeeController.addEmployee)
 
 router.route('/:id')
-    .get(employeeController.getEmployee)
+    .get(verifyToken, employeeController.getEmployee)
 
 module.exports = router

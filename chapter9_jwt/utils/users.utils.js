@@ -1,11 +1,9 @@
 const fs = require('fs')
 const path = require('path')
-const { stringify } = require('querystring')
 const userFile = path.join(__dirname, '..', 'data', 'users.json')
 
-const save = async (users) => {
+const saveAll = async (users) => {
     try {
-        console.log(JSON.stringify(users))
         await fs.promises.writeFile(userFile, JSON.stringify(users), 'utf8')
         return true
     } catch (err) {
@@ -14,4 +12,35 @@ const save = async (users) => {
     }
 }
 
-module.exports = { save }
+const getAll = () => {
+    try {
+        const data = require(userFile)
+        return data
+    } catch (err) {
+        console.log(err)
+        return err
+    }
+}
+
+const updateOne = async (userNeedToUpdate) => {
+    try {
+        const users = getAll();
+        const filteredUsers = users.filter(user => user.userid != userNeedToUpdate.userid)
+        return saveAll([...filteredUsers, userNeedToUpdate])
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
+
+const addOne = async (userNeedToAdd) => {
+    try {
+        const users = await getAll()
+        return saveAll([...users, userNeedToAdd])
+    } catch (err) {
+        console.log(err)
+        return false
+    }
+}
+
+module.exports = { getAll, saveAll, updateOne, addOne }
