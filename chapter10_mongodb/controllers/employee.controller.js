@@ -1,56 +1,54 @@
 const { responseOK, responseError } = require('./../utils/response.utils')
 const employeeUtils = require('./../utils/employee.utils')
+const mongoose = require('mongoose')
 
-const getEmployees = (req, res) => {
-    const employees = employeeUtils.getAll()
+const getEmployees = async (req, res) => {
+    const employees = await employeeUtils.getAll()
     return responseOK(res, 200, 'success', employees)
 }
 
-const getEmployee = (req, res) => {
-    const employees = employeeUtils.getAll()
-    const employee = employees.find(employee => employee.id === parseInt(req.params.id))
+const getEmployee = async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return responseError(res, 400, 'id is invalid type')
+    }
+    const employee = await employeeUtils.getOne({ _id: req.params.id })
+    if (!employee) {
+        return responseError(res, 404, 'not found')
+    }
     return responseOK(res, 200, 'success', employee)
 }
 
 const addEmployee = async (req, res) => {
-    if (!req.body.name) {
-        return responseError(res, 400, 'name is required')
+    const { firstName, lastName } = req.body
+    if (!firstName || !lastName) {
+        return responseError(res, 400, 'firstName/lastName is required')
     }
 
-    const employees = employeeUtils.getAll()
-    console.log(employees)
-    const employee = {
-        id: employees.reduce((prev, current) => (prev < current.id) ? current.id : prev.id, 0) + 1,
-        name: req.body.name
-    }
-
-    // add
-    await employeeUtils.addOne(employee)
-
-    return responseOK(res, 201, 'success')
+    const result = await employeeUtils.addOne({ firstName, lastName })
+    if (!result)
+        return responseError(res, 400, 'unsuccess')
+    else
+        return responseOK(res, 201, 'success')
 }
 
-const updateEmployee = (req, res) => {
-    const employees = employeeUtils.getAll()
-    const employee = employees.find(employee => employee.id === req.body.id)
-    if (!employee)
-        return responseError(res, 400, 'not found')
-    employee.name = req.body.name
-
+const updateEmployee = async (req, res) => {
     // update
-    employeeUtils.updateOne(employee)
-
-    return responseOK(res, 200, 'success')
+    if (!await employeeUtils.updateOne(employee)) {
+        return responseError(res, 400, 'failed')
+    }
+    else {
+        return responseOK(res, 200, 'success')
+    }
 }
 
-const delemployee = (req, res) => {
-    const employees = employeeUtils.getAll()
-    const filteredEmployees = employees.filter(employee => employee.id != req.body.id)
-
-    // delete
-    employeeUtils.saveAll(filteredEmployees)
-
-    return responseOK(res, 200, 'success')
+const delemployee = async (req, res) => {
+    // update
+    if (!await employeeUtils.deleteOne(employee)) {
+        return responseError(res, 400, 'failed')
+    }
+    else {
+        return responseOK(res, 200, 'success')
+    }
 }
 
 module.exports = { getEmployee, getEmployees, addEmployee, updateEmployee, delemployee }

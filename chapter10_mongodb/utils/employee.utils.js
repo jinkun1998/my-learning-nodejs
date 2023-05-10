@@ -1,20 +1,29 @@
-const fs = require('fs')
-const path = require('path')
-const employeePath = path.join(__dirname, '..', 'data', 'employee.json')
+const Employee = require('./../data/employee')
 
-const getAll = () => {
+const getAll = async () => {
     try {
-        const data = require(employeePath)
+        const data = await Employee.find({}).exec()
         return data ? data : []
     } catch (err) {
         console.log(err)
     }
 }
 
-const addOne = async (employeeToAdd) => {
+const getOne = async (condition) => {
     try {
-        const employees = getAll()
-        await fs.promises.writeFile(employeePath, JSON.stringify([...employees, employeeToAdd]))
+        const data = await Employee.findById(condition)
+        return data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const addOne = async ({ firstName, lastName }) => {
+    try {
+        const result = await Employee.create({
+            firstName,
+            lastName
+        })
         return true
     } catch (err) {
         console.log(err)
@@ -22,11 +31,9 @@ const addOne = async (employeeToAdd) => {
     }
 }
 
-const updateOne = async (employeeToUpdate) => {
+const updateOne = async ({ id, firstName, lastName }) => {
     try {
-        const employees = getAll()
-        const filteredEmployees = employees.filter(employee => employee.id !== employeeToAdd.id)
-        await fs.promises.writeFile(employeePath, JSON.stringify([...filteredEmployees, employeeToAdd]))
+        const result = await Employee.findOneAndUpdate({ _id: id }, { firstName: firstName, lastName: lastName }).exec()
         return true
     } catch (err) {
         console.log(err)
@@ -34,9 +41,9 @@ const updateOne = async (employeeToUpdate) => {
     }
 }
 
-const saveAll = async (employees) => {
+const deleteOne = async (id) => {
     try {
-        await fs.promises.writeFile(employeePath, JSON.stringify(employees))
+        const result = await Employee.findOneAndDelete({ id: id })
         return true
     } catch (err) {
         console.log(err)
@@ -44,4 +51,4 @@ const saveAll = async (employees) => {
     }
 }
 
-module.exports = { getAll, addOne, updateOne, saveAll }
+module.exports = { getAll, getOne, addOne, updateOne, deleteOne }

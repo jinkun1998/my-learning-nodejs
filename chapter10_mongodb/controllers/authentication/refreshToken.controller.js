@@ -4,19 +4,22 @@ const jwt = require('jsonwebtoken')
 
 const refreshTokenHandler = async (req, res) => {
     const token = req.cookies['refreshToken']
-    if (!token)
-        return res.status(400).json({ message: 'unauthorized: token expired' })
-    const users = await userUtils.getAll()
-    const user = users.find(user => user.refreshToken == token)
+    if (!token) {
+        return responseError(res, 400, 'unauthorized: token expired')
+    }
+
+    const user = await userUtils.getOne({ refreshToken: token })
     if (!user)
         return responseError(res, 401, 'unauthorized')
 
     jwt.verify(
         token,
         process.env.REFRESH_TOKEN_SECRET,
-        (err, decoded => {
-            if (err || user.userid !== decoded.userid)
-                return res.status(403).json({ message: 'forbidden' })
+        ((err, decoded) => {
+            console.log(err, decoded)
+            if (err || user.userid !== decoded.userid) {
+                return responseError(res, 403, 'forbidden')
+            }
 
             const accessToken = jwt.sign(
                 { userid: user.userid },

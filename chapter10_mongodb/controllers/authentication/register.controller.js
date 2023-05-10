@@ -7,20 +7,16 @@ const registerHandler = async (req, res) => {
     if (!userid || !password)
         return responseError(res, 400, 'username & password is required')
 
-    const user = userUtils.getAll().find(user => user.userid === userid)
+    const user = await userUtils.getOne({ userid: userid })
     if (user)
         return responseError(res, 400, 'user is existed')
 
     const encryptPwd = await bcrypt.hash(password, 10)
-    const newUser = {
-        userid: userid,
-        password: encryptPwd
-    }
 
-    if (!userUtils.addOne(newUser))
+    if (!userUtils.addOne({ userid: userid, password: encryptPwd }))
         return responseError(res, 400, 'unsuccess')
 
-    return responseOK(res, 'success')
+    return responseOK(res, 201, 'success')
 }
 
 module.exports = { registerHandler }

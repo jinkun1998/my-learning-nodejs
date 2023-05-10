@@ -1,10 +1,26 @@
-const fs = require('fs')
-const path = require('path')
-const userFile = path.join(__dirname, '..', 'data', 'users.json')
+const User = require('./../data/user')
 
-const saveAll = async (users) => {
+const getAll = async () => {
     try {
-        await fs.promises.writeFile(userFile, JSON.stringify(users), 'utf8')
+        const data = await User.find({}).exec()
+        return data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const getOne = async (condition) => {
+    try {
+        const data = await User.findOne(condition).exec()
+        return data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const updateOne = async (condition, data) => {
+    try {
+        await User.findOneAndUpdate(condition, data).exec()
         return true
     } catch (err) {
         console.log(err)
@@ -12,35 +28,18 @@ const saveAll = async (users) => {
     }
 }
 
-const getAll = () => {
+const addOne = async ({ userid, password }) => {
     try {
-        const data = require(userFile)
-        return data
-    } catch (err) {
-        console.log(err)
-        return err
-    }
-}
-
-const updateOne = async (userNeedToUpdate) => {
-    try {
-        const users = getAll();
-        const filteredUsers = users.filter(user => user.userid != userNeedToUpdate.userid)
-        return saveAll([...filteredUsers, userNeedToUpdate])
+        await User.create({
+            userid: userid,
+            password: password,
+            refreshToken: ''
+        })
+        return true
     } catch (err) {
         console.log(err)
         return false
     }
 }
 
-const addOne = async (userNeedToAdd) => {
-    try {
-        const users = await getAll()
-        return saveAll([...users, userNeedToAdd])
-    } catch (err) {
-        console.log(err)
-        return false
-    }
-}
-
-module.exports = { getAll, saveAll, updateOne, addOne }
+module.exports = { getAll, getOne, updateOne, addOne }
