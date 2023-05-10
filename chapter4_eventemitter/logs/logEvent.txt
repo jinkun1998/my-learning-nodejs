@@ -1,0 +1,7 @@
+
+27-04-2023	09:43:45	Event emitted!
+27-04-2023	09:43:48	Event emitted!
+27-04-2023	09:44:09	Event emitted!
+27-04-2023	09:44:42	[object Object]	Event emitted!
+27-04-2023	09:44:54	a2e249c0-e593-4c3b-9412-2f86cf8a55ef	Event emitted!
+27-04-2023	09:45:08	e5d11a7e-5473-4532-9a43-6e7467349eaf	Event emitted!
